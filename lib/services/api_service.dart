@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
 
-  final String baseUrl = 'https://' + 'a1c4-212-112-119-232.ngrok-free.app';
+  final String baseUrl = 'https://' + 'd517-46-251-209-205.ngrok-free.app';
 
   // Future fetchData() async {
   //   Map<String, String> requestHeaders = {
@@ -52,7 +52,6 @@ class ApiService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
       final String? token = data['access'];
-      print(token);
 
       if (token != null) {
         await saveToken(token);

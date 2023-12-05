@@ -126,7 +126,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           final confirmPassword = _passwordConfirmController.text;
 
                           final token = await _apiService.singUp(username, email, password, confirmPassword);
-                          print(token);
                           _signup(token);
                         } else {
                           _showDialog('Sign Up Failed', "Password fields didn't match.");
