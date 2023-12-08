@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:online_market/main.dart';
 
 int _balance = 0;
 

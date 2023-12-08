@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_market/resources/resources.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -11,7 +12,7 @@ class MainPage extends StatelessWidget {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/watch.jpeg"),
+              image: AssetImage(Images.watch),
               fit: BoxFit.cover,
             ),
           ),

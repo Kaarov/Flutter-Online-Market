@@ -1,20 +1,23 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:online_market/models/card_models.dart';
+
 
 class ApiService {
 
-  final String baseUrl = 'https://' + 'd517-46-251-209-205.ngrok-free.app';
+  final String baseUrl = 'https://' + '0254-212-42-113-145.ngrok-free.app';
 
-  // Future fetchData() async {
-  //   Map<String, String> requestHeaders = {
-  //       'content-type': 'application/json',
-  //       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxNjA3MzM4LCJpYXQiOjE3MDE2MDM3MzgsImp0aSI6IjkwYjE3YTBiNjU0YzQwOGZhZTkwZjY0MGI2NTlmNDM4IiwidXNlcl9pZCI6Mn0.ZYMsT7X0G0sXMpygZU5vVm9-5LsWgGiANg93a2eho94'
-  //     };
-  //
-  //   final response = await http.get(Uri.parse('https://5b06-212-112-119-232.ngrok-free.app/user/profile/'), headers: requestHeaders);
-  //
-  //   print(response.body);
+  Future headersAuthorization() async {
+    String? getJwtToken = await getToken();
+
+    Map<String, String> requestHeaders = {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer $getJwtToken',
+    };
+
+    return requestHeaders;
+  }
 
   Future<String?> singUp(String username, String email, String password, String passwordConfirm) async {
 
@@ -47,7 +50,6 @@ class ApiService {
         Uri.parse('$baseUrl/user/login/'),
         body: {"username": username, "password": password}
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
@@ -62,6 +64,24 @@ class ApiService {
     }
 
     return null;
+  }
+
+  Future<List<Order>> get_card_api() async {
+    Map<String, String> headersUrl = await headersAuthorization();
+
+    final response = await http.get(
+        Uri.parse('$baseUrl/product/card/'),
+        headers: headersUrl,
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      // print(data['order_item']);
+      // print("API");
+      return data['order_item'];
+    }
+
+    return [];
   }
 
   Future<void> saveToken(String token) async {
