@@ -12,5 +12,7 @@ class Images {
   static const String nike = 'assets/pngs/nike.jpeg';
   static const String profilePhoto = 'assets/pngs/profilePhoto.png';
   static const String purse = 'assets/pngs/purse.png';
+  static const String purse1 = 'assets/pngs/purse1.png';
+  static const String purse3 = 'assets/pngs/purse3.png';
   static const String watch = 'assets/pngs/watch.jpeg';
 }

@@ -1,4 +1,5 @@
 import 'package:online_market/pages/my_cart.dart';
+import 'package:online_market/pages/profile_page.dart';
 import 'package:online_market/resources/resources.dart';
 import 'package:online_market/widgets/profile_info.dart';
 import 'package:online_market/widgets/row_widget.dart';
@@ -32,24 +33,30 @@ class _MyProfileState extends State<MyProfile> {
                     border: Border.all(width: 1, color: Colors.black12),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 24),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 24),
                   child: Column(children: [
                     RowWidget(
                       photo: Images.user,
                       title: 'Personal Details',
-                      onTap: () {},
-                    ),
-                    RowWidget(
-                      photo: Images.purse,
-                      title: 'My Order',
-                      onTap: () {},
-                    ),
-                    RowWidget(
-                      photo: Images.love,
-                      title: 'My Favourites',
                       onTap: () {
-                      }
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileScreen()));
+                      },
                     ),
+                    // RowWidget(
+                    //   photo: Images.purse,
+                    //   title: 'My Order',
+                    //   onTap: () {
+                    //     Navigator.push(context, MaterialPageRoute(builder: (context)=> MyOrders()));
+                    //   },
+                    // ),
+                    RowWidget(
+                        photo: Images.love,
+                        title: 'My Favourites',
+                        onTap: () {}),
                     RowWidget(
                       photo: Images.shoppingCart,
                       title: 'My Card',

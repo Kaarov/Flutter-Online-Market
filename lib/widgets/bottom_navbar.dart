@@ -1,4 +1,4 @@
-import 'package:online_market/pages/my_cart.dart';
+import 'package:online_market/pages/my_orders.dart';
 import 'package:online_market/pages/my_profile.dart';
 import 'package:online_market/resources/resources.dart';
 import 'package:flutter/material.dart';
@@ -14,18 +14,17 @@ class _BottomNavbarState extends State<BottomNavbar> {
   int _selectedIndex = 2;
 
   static const List<Widget> _screens = <Widget>[
-    MyCard(),
-     Text(
-      'index:1 Orders',
+    // MyCard(),
+    Text(
+      'index:0 Home',
       style: TextStyle(color: Colors.black, fontSize: 50),
     ),
-   
+    MyOrders(),
     MyProfile(),
   ];
   void _itemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      
     });
   }
 
@@ -45,11 +44,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ),
               label: 'Home'),
           BottomNavigationBarItem(
+            // icon: Icon(I),
             icon: Image.asset(
-              Images.shoppingCart,
+              Images.purse3,
               height: 50,
             ),
-            label: 'Orders',
+            label: 'My Orders',
           ),
           BottomNavigationBarItem(
               icon: Image.asset(

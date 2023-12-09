@@ -1,11 +1,35 @@
-
 import 'package:online_market/resources/resources.dart';
 import 'package:flutter/material.dart';
+import 'package:online_market/services/api_service.dart';
 
-class InfoProfile extends StatelessWidget {
+class InfoProfile extends StatefulWidget {
   const InfoProfile({
     super.key,
   });
+
+  @override
+  State<InfoProfile> createState() => _InfoProfileState();
+}
+
+class _InfoProfileState extends State<InfoProfile> {
+  String name = "";
+  String email = "";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProfile();
+  }
+
+  Future<void> fetchProfile() async {
+    ApiService _apiService = ApiService();
+    Map<String, dynamic> profile = await _apiService.getProfile();
+    setState(() {
+      name = profile['username'];
+      email = profile['email'];
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +62,20 @@ class InfoProfile extends StatelessWidget {
           const SizedBox(
             width: 14,
           ),
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sam Man',
+                name,
                 style: TextStyle(
-                    fontSize: 30, fontWeight: FontWeight.w400,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
                     fontFamily: 'Judson'),
               ),
               Text(
-                'sam.man@gmail.com',
+                email,
                 style: TextStyle(
-                  fontFamily: 'Judson',
+                    fontFamily: 'Judson',
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     color: Colors.black12),
@@ -62,5 +87,6 @@ class InfoProfile extends StatelessWidget {
     );
   }
 }
+
 
 

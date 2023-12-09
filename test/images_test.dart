@@ -14,6 +14,8 @@ void main() {
     expect(File(Images.nike).existsSync(), isTrue);
     expect(File(Images.profilePhoto).existsSync(), isTrue);
     expect(File(Images.purse).existsSync(), isTrue);
+    expect(File(Images.purse1).existsSync(), isTrue);
+    expect(File(Images.purse3).existsSync(), isTrue);
     expect(File(Images.watch).existsSync(), isTrue);
   });
 }

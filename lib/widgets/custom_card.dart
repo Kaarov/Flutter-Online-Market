@@ -11,19 +11,19 @@ class CustomCard extends StatefulWidget {
 
 class _CustomCardState extends State<CustomCard> {
   late int count = widget.model.amount;
-  void _decreasing() {
-    setState(() {
-      if (count != 0) {
-        count--;
-      }
-    });
-  }
+  // void _decreasing() {
+  //   setState(() {
+  //     if (count != 0) {
+  //       count--;
+  //     }
+  //   });
+  // }
 
-  void _increasing() {
-    setState(() {
-      count++;
-    });
-  }
+  // void _increasing() {
+  //   setState(() {
+  //     count++;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +83,13 @@ class _CustomCardState extends State<CustomCard> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('amount:', style: TextStyle(fontSize: 15),),
-                              SizedBox(width: 3,),
+                              const Text(
+                                'amount:',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
                               // IconButton(
                               //   onPressed: () {
                               //     _decreasing();
@@ -94,12 +99,12 @@ class _CustomCardState extends State<CustomCard> {
                               // ),
                               Text(
                                 count.toString(),
-                                style: TextStyle(fontSize: 15),
+                                style: const TextStyle(fontSize: 15),
                               ),
                               // IconButton(
                               //   onPressed: () {
                               //     _increasing();
-                                  
+
                               //   },
                               //   iconSize: 10,
                               //   icon: Icon(Icons.add),

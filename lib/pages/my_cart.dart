@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:core';
+// import 'dart:js_interop';
 
+import 'package:online_market/pages/my_orders.dart';
 import 'package:online_market/resources/resources.dart';
 import 'package:online_market/widgets/calculation.dart';
 import 'package:online_market/widgets/custom_card.dart';
@@ -19,26 +21,108 @@ class MyCard extends StatefulWidget {
 class _MyCardState extends State<MyCard> {
   List<Order> orders = [];
   // List<double> prices = [1.0, 2.0, 3.0, 4.0];
-  // late double subTotalPrice = 500; // Initialize with a default value
-  // late double shipping = 0.0; // Initialize with a default value
-  late double bagTotal = 0.0; // Initialize with a default value
+  late double bagTotal = 0.0;
+  List<Order>? previousOrders; // Initialize with a default value
+  // Initialize with a default value
   // late double totalSum = 0.0;
-  
+  @override
+  void initState() {
+    super.initState();
+    fetchCard();
+  }
 
-  //  @override
+  Future<void> fetchCard() async {
+    List<Order> fetchedOrders = await get_card();
+    setState(() {
+      if (fetchedOrders.isNotEmpty) {
+        orders = fetchedOrders;
+        bagTotal = calculateTotal();
+        previousOrders =
+            fetchedOrders; // Update previousOrders if new data is available
+      } else if (previousOrders != null) {
+        // Use previousOrders if new data is null
+        orders = previousOrders!;
+        bagTotal = calculateTotal();
+      }
+    });
+  }
+
+  double calculateTotal() {
+    double total = 0.0;
+    for (Order order in orders) {
+      total += order.price * order.amount;
+    }
+    return total;
+  }
+
+  // @override
   // void initState() {
   //   super.initState();
+  //   get_card();
+  //   setState(() {
+
+  //   });
+  // }
+// @override
+// void initState() {
+//   super.initState();
+//   get_card().then((fetchedOrders) {
+//     setState(() {
+//       orders = fetchedOrders;
+//       // Perform calculations directly here if needed
+//       bagTotal = 0.0;
+//       for (Order order in orders) {
+//         bagTotal += order.price * order.amount;
+//       }
+//       print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
+//     });
+//   });
+// }
+// @override
+// void initState() {
+//   super.initState();
+//   get_card().then((fetchedOrders) {
+//     setState(() {
+//       orders = fetchedOrders;
+//       // Reset orders list and initialize bagTotal
+//       orders.clear();
+//       bagTotal = 0.0;
+//       // Iterate through fetched orders and update orders list and bagTotal
+//       for (Order order in fetchedOrders) {
+//         orders.add(order);
+//         bagTotal += order.price * order.amount;
+//       }
+//       print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
+//     });
+//   });
+// }
+
+  // Future<void> getCard() async {
+  //   // Fetch orders and update the UI
+  //   List<Order> fetchedOrders = await get_card();
+  //   setState(() {
+  //     orders = fetchedOrders;
+  //     // calculateTotal();
+  //   });
+  // }
+  // void calculateTotal() {
+  //   bagTotal = 0.0;
+
+  //   for (Order order in orders) {
+  //     bagTotal += order.price * order.amount;
+  //   }
+
   //   // Initialize the late variables in initState
 
-  //   // initializeValues();
-  //   getCard();
+  //   initializeValues();
+  // getCard();
   // }
   // Future<void> getCard() async {
   //   // Fetch orders and update the UI
   //   List<Order> orders = await get_card(); // Replace with your actual function
-  //   // setState(() {
-  //   //   calculateTotal(orders);
-  //   // });
+  //   setState(() {
+  //     calculateTotal(orders);
+  //   });
   // }
 
   // void calculateTotal(List<Order> orders) {
@@ -49,7 +133,6 @@ class _MyCardState extends State<MyCard> {
 
   //   print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
   // }
-
   // Future<List<Order>> get_card() async {
   //   ApiService _apiService = ApiService();
   //   Map<String, String> headersUrl = await _apiService.headersAuthorization();
@@ -69,7 +152,7 @@ class _MyCardState extends State<MyCard> {
   //     for (Map i in data['order_item']) {
   //       if (!order_set.contains(i['id'])) {
   //         String imageUrl = i['image'];
-  //         String image = "${baseUrl}${imageUrl}";
+  //         String image = "$baseUrl$imageUrl";
   //         Order order = Order(
   //             id: i['id'],
   //             name: i['name'],
@@ -84,52 +167,89 @@ class _MyCardState extends State<MyCard> {
   //         // print(prices);
   //       }
   //     }
-
-  //     print(bagTotal);
-  //     // setState(() {});
   //   }
-
-    // MyCard._MyCardState = 900;
-
-    // subTotalPrice = 9000;
-    //  double newSubTotalPrice = 9000;
-    //   setState(() {
-    //   subTotalPrice = newSubTotalPrice;
-    // });
-
-    // // setState(() {
-
-    // });
-
-    // for (Order order in orders) {
-    //   subTotalPrice += order.price * order.amount;
-    // }
-
-    // shipping = subTotalPrice * 0.05; // Assuming a fixed shipping cost, adjust as needed
-    // bagTotal = subTotalPrice + shipping;
-    // totalSum = shipping + subTotalPrice;
-
-    // print('Subtotal: \$${subTotalPrice.toStringAsFixed(2)}');
-    // print('Shipping: \$${shipping.toStringAsFixed(2)}');
-    // print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
-
-    // subTotalPrice = 0.0;
-    // shipping = 0.05; // Assuming a fixed shipping cost, adjust as needed
-    // bagTotal = subTotalPrice + shipping;
-
-    // for (Order order in orders) {
-    //   subTotalPrice += order.price * order.amount;
-    // }
-
-    // shipping = subTotalPrice * shipping;
-    // totalSum = shipping + subTotalPrice;
-
-    // print('Subtotal: \$${subTotalPrice.toStringAsFixed(2)}');
-    // print('Shipping: \$${shipping.toStringAsFixed(2)}');
-    // print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
-
   //   return orders;
   // }
+
+  Future<List<Order>> get_card() async {
+    ApiService _apiService = ApiService();
+    Map<String, String> headersUrl = await _apiService.headersAuthorization();
+    final String baseUrl = await _apiService.baseUrl;
+
+    List<int> order_set = [];
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/product/card/'),
+      headers: headersUrl,
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+
+      orders.clear(); // Clear existing orders before updating
+      bagTotal = 0.0; // Initialize bagTotal
+
+      for (Map i in data['order_item']) {
+        if (!order_set.contains(i['id'])) {
+          String imageUrl = i['image'];
+          String image = "$baseUrl$imageUrl";
+          Order order = Order(
+            id: i['id'],
+            name: i['name'],
+            subname: i['subname'],
+            price: i['price'],
+            image: image,
+            amount: i['amount'],
+          );
+          orders.add(order);
+          order_set.add(i['id']);
+          bagTotal += i['price'] * i['amount'];
+        }
+      }
+    }
+
+    return orders;
+  }
+
+  // MyCard._MyCardState = 900;
+
+  // subTotalPrice = 9000;
+  //  double newSubTotalPrice = 9000;
+  //   setState(() {
+  //   subTotalPrice = newSubTotalPrice;
+  // });
+
+  // // setState(() {
+
+  // });
+
+  // for (Order order in orders) {
+  //   bagTotal += order.price * order.amount;
+  // }
+
+  // shipping = subTotalPrice *
+  //     0.05; // Assuming a fixed shipping cost, adjust as needed
+  // bagTotal = subTotalPrice + shipping;
+  // totalSum = shipping + subTotalPrice;
+
+  // print('Subtotal: \$${subTotalPrice.toStringAsFixed(2)}');
+  // print('Shipping: \$${shipping.toStringAsFixed(2)}');
+  // print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
+
+  // subTotalPrice = 0.0;
+  // shipping = 0.05; // Assuming a fixed shipping cost, adjust as needed
+  // bagTotal = subTotalPrice + shipping;
+
+  // for (Order order in orders) {
+  //   subTotalPrice += order.price * order.amount;
+  // }
+
+  // shipping = subTotalPrice * shipping;
+  // totalSum = shipping + subTotalPrice;
+
+  // print('Subtotal: \$${subTotalPrice.toStringAsFixed(2)}');
+  // print('Shipping: \$${shipping.toStringAsFixed(2)}');
+  // print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
 
   @override
   Widget build(BuildContext context) {
@@ -154,68 +274,85 @@ class _MyCardState extends State<MyCard> {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.55,
-              child: FutureBuilder(
-                  future: get_card(),
-                  builder: (context, AsyncSnapshot<List<Order>> order) {
-                    if (order.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator.adaptive();
-                    } else {
-                      return ListView.builder(
-                        itemCount: order.data!.length,
-                        itemBuilder: (context, index) {
-                          return CustomCard(
-                            model: Order(
-                                image: order.data![index].image,
-                                id: order.data![index].id,
-                                name: order.data![index].name.toString(),
-                                subname: order.data![index].subname.toString(),
-                                price: order.data![index].price,
-                                amount: order.data![index].amount),
-                            // subtitle: Text(order.data![index].name.toString()),
-                            // title: Text(order.data![index].subname.toString()),
-                          );
-                        },
-                      );
-                    }
-                  }),
+              height: MediaQuery.of(context).size.height * 0.62,
+              child: Center(
+                child: FutureBuilder(
+                    future: get_card(),
+                    builder: (context, AsyncSnapshot<List<Order>> order) {
+                      if (order.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator.adaptive();
+                      } else {
+                        return ListView.builder(
+                          itemCount: order.data!.length,
+                          itemBuilder: (context, index) {
+                            return CustomCard(
+                              model: Order(
+                                  image: order.data![index].image,
+                                  id: order.data![index].id,
+                                  name: order.data![index].name.toString(),
+                                  subname:
+                                      order.data![index].subname.toString(),
+                                  price: order.data![index].price,
+                                  amount: order.data![index].amount),
+                              // subtitle: Text(order.data![index].name.toString()),
+                              // title: Text(order.data![index].subname.toString()),
+                            );
+                          },
+                        );
+                      }
+                    }),
+              ),
             ),
             Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Column(children: [
-                      Calculation(
-                        title: 'Subtotal:',
-                        
-                        // price: '\$${774}',
-                        price: '\$${bagTotal.toStringAsFixed(2)}',
+                  child: Center(
+                    child: Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Center(
+                        child: Column(children: [
+                          // Calculation(
+                          //   title: 'Subtotal:',
+
+                          //   // price: '\$${774}',
+                          //   price: '\$${bagTotal.toStringAsFixed(2)}',
+                          // ),
+                          // Calculation(
+                          //   title: 'Shipping:',
+                          //   //   // price: '\$${774}',
+
+                          //   price: '\$${shipping.toStringAsFixed(2)}',
+                          // ),
+                          Calculation(
+                            title: 'Total Price:',
+                            //   // price: '\$${774}',
+
+                            price: '\$${bagTotal.toStringAsFixed(2)}',
+                          ),
+                        ]),
                       ),
-                      // Calculation(
-                      //   title: 'Shipping:',
-                      //   // price: '\$${774}',
-
-                      //   price: '\$${prices[1].toStringAsFixed(2)}',
-                      // ),
-                      // Calculation(
-                      //   title: 'BagTotal:',
-                      //   // price: '\$${774}',
-
-                      //   price: '\$${prices[2].toStringAsFixed(2)}',
-                      // ),
-                    ]),
+                    ),
                   ),
                 ),
                 InkWell(
                   onTap: () {
-                    setState(() {
-                      
-                    });
+                    ApiService _apiService = ApiService();
+
+                    _apiService.postCheckOut(bagTotal.toInt());
+                   
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrders()));
+                    orders.clear();
+                    bagTotal = 0.0;
+                    _showDialog('Successful', 'Your item successfully ordered');
+
+                    // setState(() {
+                    //   orders.clear();
+                    //   bagTotal = 0.0;
+                    // });
                   },
                   child: Container(
                     width: 300,
@@ -240,6 +377,25 @@ class _MyCardState extends State<MyCard> {
           ],
         ),
       )),
+    );
+  }
+    void _showDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
