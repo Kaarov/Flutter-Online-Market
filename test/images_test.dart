@@ -5,6 +5,7 @@ import 'package:online_market/resources/resources.dart';
 
 void main() {
   test('images assets test', () {
+    expect(File(Images.delete).existsSync(), isTrue);
     expect(File(Images.love).existsSync(), isTrue);
     expect(File(Images.shoppingCart).existsSync(), isTrue);
     expect(File(Images.user).existsSync(), isTrue);
@@ -12,10 +13,12 @@ void main() {
     expect(File(Images.go).existsSync(), isTrue);
     expect(File(Images.home).existsSync(), isTrue);
     expect(File(Images.nike).existsSync(), isTrue);
+    expect(File(Images.oneChanceMode).existsSync(), isTrue);
     expect(File(Images.profilePhoto).existsSync(), isTrue);
     expect(File(Images.purse).existsSync(), isTrue);
     expect(File(Images.purse1).existsSync(), isTrue);
     expect(File(Images.purse3).existsSync(), isTrue);
+    expect(File(Images.timeAttackMode).existsSync(), isTrue);
     expect(File(Images.watch).existsSync(), isTrue);
   });
 }

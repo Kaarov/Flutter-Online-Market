@@ -6,7 +6,7 @@ import 'package:online_market/models/card_models.dart';
 
 class ApiService {
 
-  final String baseUrl = 'https://' + 'e00b-212-42-113-145.ngrok-free.app';
+  final String baseUrl = 'https://' + '7b9e-217-29-26-50.ngrok-free.app';
 
   Future headersAuthorization() async {
     String? getJwtToken = await getToken();
@@ -64,6 +64,37 @@ class ApiService {
     }
 
     return null;
+  }
+
+  Future<void> posT_add_to_card(int product_id, int amount) async {
+    Map<String, String> headersUrl = await headersAuthorization();
+
+
+    Map<String, dynamic> request = {
+      'product_id': product_id,
+      'amount': amount
+    };
+
+    String jsonString = jsonEncode(request);
+
+    final response = await http.post(
+        Uri.parse('$baseUrl/product/add_to_card/'),
+        body: jsonString,
+        headers: headersUrl,
+    );
+
+
+  }
+
+  Future<void> deleteCart(int product_id) async {
+    Map<String, String> headersUrl = await headersAuthorization();
+
+    final response = await http.delete(
+        Uri.parse('$baseUrl/product/card/$product_id/'),
+        headers: headersUrl,
+    );
+
+
   }
 
   Future<List<Order>> get_card_api() async {

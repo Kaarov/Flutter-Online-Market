@@ -3,10 +3,6 @@ import 'package:online_market/models/card_models.dart';
 
 class CustomCardBaizak extends StatefulWidget {
   final Order model;
-  // final String? name;
-  // final String? description;
-  // final int? quantity;
-  // final int? price;
   const CustomCardBaizak({super.key, required this.model});
 
   @override
@@ -72,25 +68,23 @@ class _CustomCardState extends State<CustomCardBaizak> {
                           fontWeight: FontWeight.w400,
                           color: Color(0xff898989)),
                     ),
-                    const SizedBox(
-                      height: 0,
+                    // const SizedBox(
+                    //   height: 0,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(
+                        '\$${widget.model.price.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Judson',
+                            fontWeight: FontWeight.w400),
+                      ),
                     ),
-
                     // const SizedBox(
                     //   width: 14,
                     // )
                   ],
-                ),
-              ),
-              Spacer(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '\$${widget.model.price.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Judson',
-                      fontWeight: FontWeight.w400),
                 ),
               ),
             ],

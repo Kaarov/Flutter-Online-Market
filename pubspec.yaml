@@ -39,6 +39,9 @@ dependencies:
   http: ^1.1.2
   shared_preferences: ^2.2.2
   dio: ^5.4.0
+  auto_size_text: ^3.0.0
+  google_fonts: ^6.1.0
+  provider: 
 
 
 dev_dependencies:

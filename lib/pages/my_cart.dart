@@ -4,6 +4,7 @@ import 'dart:core';
 
 import 'package:online_market/pages/my_orders.dart';
 import 'package:online_market/resources/resources.dart';
+import 'package:online_market/widgets/bottom_navbar.dart';
 import 'package:online_market/widgets/calculation.dart';
 import 'package:online_market/widgets/custom_card.dart';
 import '../services/api_service.dart';
@@ -55,122 +56,6 @@ class _MyCardState extends State<MyCard> {
     return total;
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   get_card();
-  //   setState(() {
-
-  //   });
-  // }
-// @override
-// void initState() {
-//   super.initState();
-//   get_card().then((fetchedOrders) {
-//     setState(() {
-//       orders = fetchedOrders;
-//       // Perform calculations directly here if needed
-//       bagTotal = 0.0;
-//       for (Order order in orders) {
-//         bagTotal += order.price * order.amount;
-//       }
-//       print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
-//     });
-//   });
-// }
-// @override
-// void initState() {
-//   super.initState();
-//   get_card().then((fetchedOrders) {
-//     setState(() {
-//       orders = fetchedOrders;
-//       // Reset orders list and initialize bagTotal
-//       orders.clear();
-//       bagTotal = 0.0;
-//       // Iterate through fetched orders and update orders list and bagTotal
-//       for (Order order in fetchedOrders) {
-//         orders.add(order);
-//         bagTotal += order.price * order.amount;
-//       }
-//       print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
-//     });
-//   });
-// }
-
-  // Future<void> getCard() async {
-  //   // Fetch orders and update the UI
-  //   List<Order> fetchedOrders = await get_card();
-  //   setState(() {
-  //     orders = fetchedOrders;
-  //     // calculateTotal();
-  //   });
-  // }
-  // void calculateTotal() {
-  //   bagTotal = 0.0;
-
-  //   for (Order order in orders) {
-  //     bagTotal += order.price * order.amount;
-  //   }
-
-  //   // Initialize the late variables in initState
-
-  //   initializeValues();
-  // getCard();
-  // }
-  // Future<void> getCard() async {
-  //   // Fetch orders and update the UI
-  //   List<Order> orders = await get_card(); // Replace with your actual function
-  //   setState(() {
-  //     calculateTotal(orders);
-  //   });
-  // }
-
-  // void calculateTotal(List<Order> orders) {
-
-  //   for (Order order in orders) {
-  //     bagTotal += order.price * order.amount;
-  //   }
-
-  //   print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
-  // }
-  // Future<List<Order>> get_card() async {
-  //   ApiService _apiService = ApiService();
-  //   Map<String, String> headersUrl = await _apiService.headersAuthorization();
-  //   final String baseUrl = await _apiService.baseUrl;
-
-  //   List<int> order_set = []; //wfkrmkmrk
-
-  //   final response = await http.get(
-  //     Uri.parse('$baseUrl/product/card/'),
-  //     headers: headersUrl,
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     final Map<String, dynamic> data = jsonDecode(response.body);
-  //     // orders.clear();
-
-  //     for (Map i in data['order_item']) {
-  //       if (!order_set.contains(i['id'])) {
-  //         String imageUrl = i['image'];
-  //         String image = "$baseUrl$imageUrl";
-  //         Order order = Order(
-  //             id: i['id'],
-  //             name: i['name'],
-  //             subname: i['subname'],
-  //             price: i['price'],
-  //             image: image,
-  //             amount: i['amount']);
-  //         orders.add(order);
-  //         order_set.add(i['id']);
-  //         bagTotal += i['price'] * i['amount'];
-  //         // prices[0] = 500;
-  //         // print(prices);
-  //       }
-  //     }
-  //   }
-  //   return orders;
-  // }
-
   Future<List<Order>> get_card() async {
     ApiService _apiService = ApiService();
     Map<String, String> headersUrl = await _apiService.headersAuthorization();
@@ -210,47 +95,6 @@ class _MyCardState extends State<MyCard> {
 
     return orders;
   }
-
-  // MyCard._MyCardState = 900;
-
-  // subTotalPrice = 9000;
-  //  double newSubTotalPrice = 9000;
-  //   setState(() {
-  //   subTotalPrice = newSubTotalPrice;
-  // });
-
-  // // setState(() {
-
-  // });
-
-  // for (Order order in orders) {
-  //   bagTotal += order.price * order.amount;
-  // }
-
-  // shipping = subTotalPrice *
-  //     0.05; // Assuming a fixed shipping cost, adjust as needed
-  // bagTotal = subTotalPrice + shipping;
-  // totalSum = shipping + subTotalPrice;
-
-  // print('Subtotal: \$${subTotalPrice.toStringAsFixed(2)}');
-  // print('Shipping: \$${shipping.toStringAsFixed(2)}');
-  // print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
-
-  // subTotalPrice = 0.0;
-  // shipping = 0.05; // Assuming a fixed shipping cost, adjust as needed
-  // bagTotal = subTotalPrice + shipping;
-
-  // for (Order order in orders) {
-  //   subTotalPrice += order.price * order.amount;
-  // }
-
-  // shipping = subTotalPrice * shipping;
-  // totalSum = shipping + subTotalPrice;
-
-  // print('Subtotal: \$${subTotalPrice.toStringAsFixed(2)}');
-  // print('Shipping: \$${shipping.toStringAsFixed(2)}');
-  // print('Bag Total: \$${bagTotal.toStringAsFixed(2)}');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -344,7 +188,7 @@ class _MyCardState extends State<MyCard> {
 
                     _apiService.postCheckOut(bagTotal.toInt());
                    
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrders()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavbar()));
                     orders.clear();
                     bagTotal = 0.0;
                     _showDialog('Successful', 'Your item successfully ordered');

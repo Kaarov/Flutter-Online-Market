@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:online_market/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:online_market/services/api_service.dart';
@@ -65,20 +66,22 @@ class _InfoProfileState extends State<InfoProfile> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AutoSizeText(
                 name,
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w400,
                     fontFamily: 'Judson'),
+                    maxLines: 1,
               ),
-              Text(
+              AutoSizeText(
                 email,
                 style: TextStyle(
                     fontFamily: 'Judson',
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     color: Colors.black12),
+                    maxLines: 1,
               )
             ],
           ),

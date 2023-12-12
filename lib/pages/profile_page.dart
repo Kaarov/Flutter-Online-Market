@@ -16,17 +16,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    get_profile();
-  
+    fetchProfile();
   }
 
-  Future<void> get_profile() async {
+  Future<void> fetchProfile() async {
     ApiService _apiService = ApiService();
     Map<String, dynamic> profile = await _apiService.getProfile();
-    name = profile['username'];
-    email = profile['email'];
+    setState(() {
+      name = profile['username'];
+      email = profile['email'];
+    });
   }
 
   @override

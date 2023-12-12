@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:online_market/models/card_models.dart';
+import 'package:online_market/pages/my_cart.dart';
+import 'package:online_market/resources/resources.dart';
+import 'package:online_market/services/api_service.dart';
 
 class CustomCard extends StatefulWidget {
   final Order model;
@@ -11,19 +14,6 @@ class CustomCard extends StatefulWidget {
 
 class _CustomCardState extends State<CustomCard> {
   late int count = widget.model.amount;
-  // void _decreasing() {
-  //   setState(() {
-  //     if (count != 0) {
-  //       count--;
-  //     }
-  //   });
-  // }
-
-  // void _increasing() {
-  //   setState(() {
-  //     count++;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +36,34 @@ class _CustomCardState extends State<CustomCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.model.name,
-                      style: const TextStyle(
-                          fontSize: 27,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Judson'),
+                    Container(
+                      width: 230,
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              widget.model.name,
+                              style: const TextStyle(
+                                  fontSize: 27,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Judson'),
+                            ),
+                          ),
+                          Spacer(),
+                          InkWell(
+                            child: Image.asset(
+                              Images.delete,
+                              height: 30,
+                            ),
+                            onTap: () {
+                              ApiService _apiService = ApiService();
+
+                              _apiService.deleteCart(widget.model.id);
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> MyCard()));
+                            },
+                          )
+                        ],
+                      ),
                     ),
                     Text(
                       widget.model.subname,
